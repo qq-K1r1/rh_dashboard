@@ -1,0 +1,30 @@
+CREATE PROCEDURE loginUser(IN username VARCHAR(255))
+BEGIN
+    DECLARE auth_id INT;
+    DECLARE user_id INT;
+    DECLARE full_name VARCHAR(255);
+    DECLARE user_role VARCHAR(50);
+    DECLARE stored_password_hash VARCHAR(255);
+
+    -- Check for RH Manager
+    SELECT a.AuthentificationID, r.RHManagerID, r.NomPrenom, a.Role, a.Mot_de_passe 
+    INTO auth_id, user_id, full_name, user_role, stored_password_hash
+    FROM Authentification a
+    INNER JOIN RHManager r ON a.AuthentificationID = r.AuthentificationID
+    WHERE a.Identifiant = username
+    LIMIT 1;
+
+    -- Check if RH Manager is found
+    IF auth_id IS NULL THEN
+        -- Check for Employé
+        SELECT a.AuthentificationID, e.EmployéID, e.NomPrenom, a.Role, a.Mot_de_passe 
+        INTO auth_id, user_id, full_name, user_role, stored_password_hash
+        FROM Authentification a
+        INNER JOIN Employé e ON a.AuthentificationID = e.AuthentificationID
+        WHERE a.Identifiant = username
+        LIMIT 1;
+    END IF;
+
+    -- Return user data
+    SELECT auth_id AS AuthentificationID, user_id AS UserID, full_name AS FullName, user_role AS Role, stored_password_hash AS PasswordHash;
+END;

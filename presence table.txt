@@ -1,0 +1,38 @@
+CREATE TABLE toutPrésence (
+    PrésenceID INT PRIMARY KEY AUTO_INCREMENT,
+    Mois INT,
+    Année INT,
+    EmployéID INT,
+    Jour1 VARCHAR(1)
+    Jour2 VARCHAR(1)
+    Jour3 VARCHAR(1) 
+    Jour4 VARCHAR(1) 
+    Jour5 VARCHAR(1) 
+    Jour6 VARCHAR(1) 
+    Jour7 VARCHAR(1) 
+    Jour8 VARCHAR(1) 
+    Jour9 VARCHAR(1)
+    Jour10 VARCHAR(1) 
+    Jour11 VARCHAR(1) 
+    Jour12 VARCHAR(1) 
+    Jour13 VARCHAR(1) 
+    Jour14 VARCHAR(1) 
+    Jour15 VARCHAR(1) 
+    Jour16 VARCHAR(1) 
+    Jour17 VARCHAR(1) 
+    Jour18 VARCHAR(1)
+    Jour19 VARCHAR(1) 
+    Jour20 VARCHAR(1) 
+    Jour21 VARCHAR(1) 
+    Jour22 VARCHAR(1) 
+    Jour23 VARCHAR(1) 
+    Jour24 VARCHAR(1) 
+    Jour25 VARCHAR(1)
+    Jour26 VARCHAR(1) 
+    Jour27 VARCHAR(1) 
+    Jour28 VARCHAR(1) 
+    Jour29 VARCHAR(1) 
+    Jour30 VARCHAR(1)
+    Jour31 VARCHAR(1)
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);

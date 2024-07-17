@@ -1,0 +1,170 @@
+CREATE TABLE Département (
+    DépartementID INT PRIMARY KEY AUTO_INCREMENT,
+    Nom_Département VARCHAR(255)not null,
+    Entreprise VARCHAR(255)not null,
+    Description VARCHAR(255) not null
+);
+
+CREATE TABLE Authentification (
+    AuthentificationID INT PRIMARY KEY AUTO_INCREMENT,
+    Identifiant VARCHAR(255),
+    Mot_de_passe VARCHAR(255),
+    Role VARCHAR(50)
+);
+CREATE TABLE Employé (
+    EmployéID INT PRIMARY KEY AUTO_INCREMENT,
+    NomPrenom VARCHAR(255) not null,
+    Nom_utilisateur varchar(255),
+    Mot_De_Passe varchar(255),
+    Email VARCHAR(255)not null,
+    Adresse VARCHAR(255)not null,
+    Téléphone VARCHAR(50)not null,
+    Date_Embauche DATE not null,
+    profile_photo varchar(255),
+    Role varchar(50),
+    DépartementID INT,
+    FOREIGN KEY (DépartementID) REFERENCES Département(DépartementID),
+    AuthentificationID INT,
+    FOREIGN KEY (AuthentificationID) REFERENCES Authentification(AuthentificationID)
+);
+
+CREATE TABLE RHManager (
+    RHManagerID INT PRIMARY KEY AUTO_INCREMENT,
+    NomPrenom VARCHAR(255)not null,
+    Email VARCHAR(255),
+    Telephone VARCHAR(255),
+    Nom_utilisateur varchar(255) NOT NULL,
+    Mot_De_Passe varchar(255)NOT NULL,
+    profile_photo varchar(255),
+    Date_Embauche date,
+    AuthentificationID INT,
+    FOREIGN KEY (AuthentificationID) REFERENCES Authentification(AuthentificationID)
+);
+
+CREATE TABLE EmployeeFormation (
+    EmployeeFormationID INT PRIMARY KEY AUTO_INCREMENT,
+    EmployeID INT,
+    FormationID INT,
+    FOREIGN KEY (EmployeID) REFERENCES employé(EmployeID),
+    FOREIGN KEY (FormationID) REFERENCES Formation(FormationID)
+);
+
+CREATE TABLE Formation (
+    FormationID INT PRIMARY KEY AUTO_INCREMENT,
+    Nom_Formation VARCHAR(255),
+    Description VARCHAR(255),
+    EmployéID INT,
+    Date_Formation DATE,
+    Duree varchar(50)
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);
+
+
+CREATE TABLE Blog (
+    BlogID INT PRIMARY KEY AUTO_INCREMENT,
+    Titre VARCHAR(255) NOT NULL,
+    Description TEXT NOT NULL,
+    Photo VARCHAR(255), -- Adjust data type as per your file storage strategy
+    DateCreation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Auteur VARCHAR(255) NOT NULL, -- Assuming it will store the username or identifier of the author
+    AuthentificationID INT,
+    FOREIGN KEY (AuthentificationID) REFERENCES Authentification(AuthentificationID)
+);
+
+CREATE TABLE présence_journalière(
+    PrésenceID INT PRIMARY KEY AUTO_INCREMENT,
+    Date DATE,
+    Heure_Arrivee TIME,
+    Heure_Depart TIME,
+    EmployéID INT,
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);
+
+CREATE TABLE Formation (
+    FormationID INT PRIMARY KEY AUTO_INCREMENT,
+    Nom_Formation VARCHAR(255),
+    Description VARCHAR(255),
+    EmployéID INT,
+    Date_Formation DATE,
+    Duree varchar(50)
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);
+
+CREATE TABLE EmployeeFormation (
+    EmployeeFormationID INT PRIMARY KEY AUTO_INCREMENT,
+    EmployeID INT,
+    FormationID INT,
+    FOREIGN KEY (EmployeID) REFERENCES employé(EmployeID),
+    FOREIGN KEY (FormationID) REFERENCES Formation(FormationID)
+);
+
+CREATE TABLE Evaluation (
+    EvaluationID INT PRIMARY KEY AUTO_INCREMENT,
+    Date_Evaluation DATE,
+    Score INT,
+    Commentaires VARCHAR(255),
+    EmployéID INT,
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);
+
+CREATE TABLE Congé (
+    CongéID INT PRIMARY KEY AUTO_INCREMENT,
+    Type_Congé VARCHAR(50),
+    Date_Début DATE,
+    Date_Fin DATE,
+    Motif varchar(255),
+    Statut VARCHAR(50),
+    EmployéID INT,
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);
+
+CREATE TABLE Rémunération (
+    RémunérationID INT PRIMARY KEY AUTO_INCREMENT,
+    Montant DECIMAL(10, 2),
+    Date_Paiement DATE,
+    EmployéID INT,
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);
+
+CREATE TABLE Avantage (
+    AvantageID INT PRIMARY KEY AUTO_INCREMENT,
+    Type_Avantage VARCHAR(255),
+    Description VARCHAR(255),
+    Valeur DECIMAL(10, 2),
+    EmployéID INT,
+    FOREIGN KEY (EmployéID) REFERENCES Employé(EmployéID)
+);
+
+CREATE TABLE Objectifs (
+    ObjectifID INT PRIMARY KEY AUTO_INCREMENT,
+    ParentObjectifID INT,
+    Titre VARCHAR(255) NOT NULL,
+    Description TEXT,
+    EmployeID INT,
+    DateCreation DATE,
+    DateEcheance DATE,
+    Type ENUM('Principal', 'Sous-objectif') NOT NULL,
+    Statut ENUM('En cours', 'Terminé', 'En attente') DEFAULT 'En attente',
+    CONSTRAINT fk_employe
+        FOREIGN KEY (EmployeID)
+        REFERENCES Employe(EmployeID)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_parent_objectif
+        FOREIGN KEY (ParentObjectifID)
+        REFERENCES Objectifs(ObjectifID)
+        ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
